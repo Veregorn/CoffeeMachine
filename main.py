@@ -42,6 +42,29 @@ def print_report():
     print(f"Coffee: {resources['coffee']}g")
     print(f"Money: ${money}")
 
+# Function that checks if there is enough water to make the coffee
+def enough_water(product):
+    return resources["water"] >= MENU[product]["ingredients"]["water"]
+
+# Function that checks if there is enough coffee to make the coffee
+def enough_coffee(product):
+    return resources["coffee"] >= MENU[product]["ingredients"]["coffee"]
+
+# Function that checks if there is enough milk to make the coffee
+def enough_milk(product):
+    return resources["milk"] >= MENU[product]["ingredients"]["milk"]
+
+# Function that checks if there are enough resources to create the coffee selected by the customer
+def enough_resources(product):
+    water = enough_water(product)
+    coffee = enough_coffee(product)
+    milk = True
+
+    if product == 'latte' or product == 'cappuccino':
+        milk = enough_milk(product)
+
+    return {water,milk,coffee}
+
 # TODO: Create a main loop so the machine can serve next customer when current operation has finished
 while True:
 
@@ -53,5 +76,6 @@ while True:
         break
     elif user_input == 'report':
         print_report()
-
-# TODO: Check resources sufficient
+    elif user_input == 'espresso' or user_input == 'latte' or user_input == 'cappuccino':
+        # TODO: Check resources sufficient
+        # We need a data structure here to return a right answer to the customer
