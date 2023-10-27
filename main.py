@@ -80,6 +80,22 @@ def process_coins_to_dollars():
 def calc_change(product, dollars):
     return dollars - MENU[product]["cost"]
 
+# Function that makes a coffee (deduct ingredients from the coffee machine resources)
+def make_coffee(type):
+    if type == 'espresso':
+        resources["water"] -= 50
+        resources["coffee"] -= 18
+    elif type == 'latte':
+        resources["water"] -= 200
+        resources["coffee"] -= 24
+        resources["milk"] -= 150
+    elif type == 'cappuccino':
+        resources["water"] -= 250
+        resources["coffee"] -= 24
+        resources["milk"] -= 100
+
+    print(f"Here is your {type} ☕️. Enjoy!")
+
 # TODO: Create a main loop so the machine can serve next customer when current operation has finished
 while True:
 
@@ -109,4 +125,11 @@ while True:
             change = calc_change(user_input, dollars_inserted)
             if change < 0:
                 print("Sorry that's not enough money. Money refunded.")
+            else: # Enough money inserted
+                # Update machine's coins box
+                money += MENU[user_input]["cost"]
+                if change > 0: # Offer it to the costumer
+                    print(f"Here is ${change} dollars in change.")
+                # Everything is fine: Let's make the coffee ☕️
+                make_coffee(user_input)
             
