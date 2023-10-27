@@ -63,7 +63,22 @@ def enough_resources(product):
     if product == 'latte' or product == 'cappuccino':
         milk = enough_milk(product)
 
-    return {water,milk,coffee}
+    return {"water": water,"milk": milk, "coffee": coffee}
+
+# TODO: Process coins
+def process_coins_to_dollars():
+    print("Please insert coins.")
+    
+    quarters = int(input("how many quarters?: "))
+    dimes = int(input("how many dimes?: "))
+    nickles = int(input("how many nickles?: "))
+    pennies = int(input("how many pennies?: "))
+
+    return (0.25 * quarters) + (0.10 * dimes) + (0.05 * nickles) + (0.01 * pennies)
+
+# Function that calculates the change in dollars given a product and an amount of dollars
+def calc_change(product, dollars):
+    return dollars - MENU[product]["cost"]
 
 # TODO: Create a main loop so the machine can serve next customer when current operation has finished
 while True:
@@ -79,3 +94,19 @@ while True:
     elif user_input == 'espresso' or user_input == 'latte' or user_input == 'cappuccino':
         # TODO: Check resources sufficient
         # We need a data structure here to return a right answer to the customer
+        enough_of_this = {'water': False, 'milk': False, 'coffee': False}
+        # Now we need to update that structure calling our 'enough_resources' function
+        enough_of_this = enough_resources(user_input)
+        # Now we need to check each resource and send and answer to the user
+        if not enough_of_this["water"]:
+            print(" Sorry there is not enough water.")
+        elif not enough_of_this["milk"]:
+            print(" Sorry there is not enough milk.")
+        elif not enough_of_this["coffee"]:
+            print(" Sorry there is not enough coffee.")
+        else: # There is plenty of all resources needed
+            dollars_inserted = process_coins_to_dollars()
+            change = calc_change(user_input, dollars_inserted)
+            if change < 0:
+                print("Sorry that's not enough money. Money refunded.")
+            
