@@ -18,11 +18,11 @@ def main():
             coffee_maker.report()
             money_machine.report()
         else:
-            menu_item = menu.find_drink(user_input)
-            if menu_item:
-                if coffee_maker.is_resource_sufficient(menu_item):
-                    if money_machine.make_payment(menu_item.cost):
-                        coffee_maker.make_coffee(menu_item)
+            drink = menu.find_drink(user_input)
+            if drink:
+                if coffee_maker.is_resource_sufficient(drink):
+                    if money_machine.make_payment(drink.cost):
+                        coffee_maker.make_coffee(drink)
 
 # si tu script es importado en otro programa, el código dentro del bloque if no se ejecutará automáticamente (habría que llamar a la función de forma explícita)
 if __name__ == "__main__":
